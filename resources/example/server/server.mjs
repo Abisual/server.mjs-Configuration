@@ -36,7 +36,25 @@ chat.registerCmd('sethp', (player, arg) => {
     player.health = amount;
 })
 
-chat.registerCmd('Hello',(player, arg) => {
-    chat.send(player, 'world')
+chat.registerCmd('veh',(player, arg) => {
+    if (!arg || arg.lenght <=0){
+        chat.send(player, '/veh (model)')
+        return;
+    }
+    try {
+        const newVehicle = new alt.Vehicle(
+            arg[0], 
+            player.pos.x, 
+            player.pos.y, 
+            player.pos.z, 
+            0, 
+            0, 
+            0
+        );
+        alt.emitClient(player, 'vehicle:SetInto', newVehicle);
+    } catch(err){
+        chat.send(player, 'That model was incorrect');
+    }
+    
 });
 
